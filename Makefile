@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-NAME		=	a.out
+NAME		=	myftp
 
 CC		=	gcc
 
@@ -13,6 +13,7 @@ SRCDIR		=	src/
 INCDIR		=	include/
 
 SRC		=	$(SRCDIR)main.c \
+			$(SRCDIR)network.c \
 
 OBJ		=	$(SRC:.c=.o)
 
