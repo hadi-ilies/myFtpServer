@@ -18,4 +18,15 @@ typedef struct
     struct sockaddr_in address;
     int addrlen;
     char buffer[4096];
+    char *pwd;
 } server_t;
+
+typedef struct {
+  const char *user;
+  const char *pass;
+} client_t;
+
+typedef struct {
+  const char *code;
+  const char *msg;
+} code_t;

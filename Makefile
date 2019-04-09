@@ -14,6 +14,8 @@ INCDIR		=	include/
 
 SRC		=	$(SRCDIR)main.c \
 			$(SRCDIR)network.c \
+			$(SRCDIR)split.c \
+			$(SRCDIR)socket.c \
 
 OBJ		=	$(SRC:.c=.o)
 
