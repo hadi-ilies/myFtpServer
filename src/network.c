@@ -21,7 +21,8 @@
 static void ftp_commands(char **command, int *new_socket, server_t *server, client_t *client)
 {
     for (size_t i = 0; command_g[i].command != NULL; i++) {
-        if (strcmp(command[0], command_g[i].command) == 0 && client->status == GUESS && command_g[i].status == LOGGED) {
+        if (strcmp(command[0], command_g[i].command) == 0 
+        && client->status == GUESS && command_g[i].status == LOGGED) {
             dprintf(*new_socket, "%s You must be logged to use this command\n", code_g[14].code);
             continue;
         }
@@ -32,18 +33,18 @@ static void ftp_commands(char **command, int *new_socket, server_t *server, clie
 
 static void exec_command(int *new_socket, server_t *server)
 {
-    client_t client = {NULL, GUESS};
+    client_t client = {server->pwd, NULL, NULL, GUESS};
 
+    //todo put global path your stuff will not works if your client are'ent in the same dir
+    if (chdir(client.pwd) == -1)
+        EXIT_MSG(stderr, "Error: chdir", 84);
     while (read(*new_socket, server->buffer, 4096) > 0) {
-        //print le message reçu
         char **command = split_c(server->buffer, " \n\t\r");
 
         ftp_commands(command, new_socket, server, &client);
         printf("Buff : %s\n", server->buffer);
         memset(server->buffer, '\0', 4096);
-        //envoi la réponse
         dprintf(*new_socket, "[SERVER] reçu 5/5 !\n");
-        //send(new_socket, "[SERVER] reçu 5/5 !", sizeof("[SERVER] reçu 5/5 !"), 0);
     }
 }
 

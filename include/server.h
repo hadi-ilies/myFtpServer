@@ -37,6 +37,8 @@ typedef struct {
 } code_t;
 
 typedef struct {
+  char *pwd;
+  char *old_pwd;
   char *username;
   status_t status;
 } client_t;
@@ -61,7 +63,8 @@ static const code_t code_g[] =
     {"125", "Data connection already open; transfer starting."},
     {"150", "File status okay; about to open data connection."},
     {"200", "Command okay."},
-    {"214", "Help message."},
+    {"214", "commands available are : \nUSER\nPASS\nHELP\nPWD\nCWD\n"
+    "CDUP\nNOPE\nQUIT\n"},
     {"220", "Service ready for new user."},
     {"221", "Service closing control connection."},
     {"226", "Closing data connection."},
@@ -78,13 +81,21 @@ void check_user(char **command, int *new_socket, client_t *client);
 void check_password(char **command, int *new_socket, client_t *client);
 void check_quit(char **command, int *new_socket, client_t *client);
 void check_noop(char **command, int *new_socket, client_t *client);
+void check_cwd(char **command, int *new_socket, client_t *client);
+void check_pwd(char **command, int *new_socket, client_t *client);
+void check_cdup(char **command, int *new_socket, client_t *client);
+void check_help(char **command, int *new_socket, client_t *client);
 
-
+//todo fix CDUP
 static const commands_t command_g[] = 
 {
     {GUESS, "USER", &check_user},
     {GUESS, "PASS", &check_password},
-    {GUESS, "QUIT", check_quit},
+    {GUESS, "QUIT", &check_quit},
     {LOGGED, "NOPE", &check_noop},
+    {LOGGED, "CWD", &check_cwd},
+    {LOGGED, "PWD", &check_pwd},
+    {LOGGED, "CDUP", &check_cdup},
+    {GUESS, "HELP", &check_help},
     {GUESS, NULL, NULL}
 };

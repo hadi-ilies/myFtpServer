@@ -21,7 +21,10 @@ SRC		=	$(SRCDIR)main.c \
 			$(COMMANDDIR)pass_command.c \
 			$(COMMANDDIR)noop_command.c \
 			$(COMMANDDIR)quit_command.c \
-			
+			$(COMMANDDIR)cwd_command.c \
+			$(COMMANDDIR)pwd_command.c \
+			$(COMMANDDIR)cdup_command.c \
+			$(COMMANDDIR)help_command.c \
 
 OBJ		=	$(SRC:.c=.o)
 
