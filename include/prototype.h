@@ -14,5 +14,5 @@
 // prototype
 void network_management(size_t port, char *path);
 server_t init_socket(size_t port, char *path);
-char **split_c(char *this, char separator);
+char **split_c(char *this, char *separator);
 #endif

@@ -10,12 +10,18 @@ NAME		=	myftp
 CC		=	gcc
 
 SRCDIR		=	src/
+COMMANDDIR	=	$(SRCDIR)command/
 INCDIR		=	include/
 
 SRC		=	$(SRCDIR)main.c \
 			$(SRCDIR)network.c \
 			$(SRCDIR)split.c \
 			$(SRCDIR)socket.c \
+			$(COMMANDDIR)user_command.c \
+			$(COMMANDDIR)pass_command.c \
+			$(COMMANDDIR)noop_command.c \
+			$(COMMANDDIR)quit_command.c \
+			
 
 OBJ		=	$(SRC:.c=.o)
 
