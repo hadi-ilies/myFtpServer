@@ -36,15 +36,16 @@ static void exec_command(int *new_socket, server_t *server)
     client_t client = {server->pwd, NULL, NULL, GUESS};
 
     //todo put global path your stuff will not works if your client are'ent in the same dir
+    dprintf(*new_socket, "%s %s\r\n", code_g[5].code, code_g[5].msg);
     if (chdir(client.pwd) == -1)
         EXIT_MSG(stderr, "Error: chdir", 84);
     while (read(*new_socket, server->buffer, 4096) > 0) {
         char **command = split_c(server->buffer, " \n\t\r");
 
         ftp_commands(command, new_socket, server, &client);
-        printf("Buff : %s\n", server->buffer);
+        //printf("Buff : %s\n", server->buffer);
         memset(server->buffer, '\0', 4096);
-        dprintf(*new_socket, "[SERVER] reçu 5/5 !\n");
+        //dprintf(*new_socket, "[SERVER] reçu 5/5 !\n");
     }
 }
 
