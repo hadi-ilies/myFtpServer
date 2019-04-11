@@ -22,14 +22,14 @@ void check_user(char **command, int *new_socket, client_t *client)
 
     for (size_t i = 0; clients_g[i].user != NULL; i++) {
         if (strcmp(name, clients_g[i].user) == 0) {
-            dprintf(*new_socket, "%s %s\n", code_g[12].code, code_g[12].msg);
-            client->username = name;
-            if (strcmp(client->username, "Anonymous") == 0) {
-                command[1] = "";
-                check_password(command, new_socket, client);
-            }
+            dprintf(*new_socket, "%s %s\r\n", code_g[12].code, code_g[12].msg);
+            client->username = strdup(name);
+           // if (strcmp(client->username, "Anonymous") == 0) {
+            //    command[1] = "";
+            //    check_password(command, new_socket, client);
+            //}
             return;
         }
     }
-    dprintf(*new_socket, "%s %s\n", code_g[14].code, code_g[14].msg);
+    dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
 }

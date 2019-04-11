@@ -21,7 +21,7 @@
 
 server_t init_socket(size_t port, char *path)
 {
-    server_t server;
+    server_t server = {{0}};
 
     server.sockfd = socket(AF_INET, SOCK_STREAM, 0);
     server.opt = 0;
@@ -37,5 +37,8 @@ server_t init_socket(size_t port, char *path)
     sizeof(server.address));
     listen(server.sockfd, 6);
     server.pwd = path;
+    for (size_t i = 0; i < NB_CLIENT; ++i)
+        server.fds[i] = -1;
     return server;
 }
+//getcwd -> get cwd

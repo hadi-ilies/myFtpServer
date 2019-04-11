@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#define NB_CLIENT 20
 
 typedef enum {
   GUESS,
@@ -17,7 +18,11 @@ typedef enum {
 } status_t;  
 typedef struct
 {
+    struct timeval tv;
     int sockfd;
+    int fds[NB_CLIENT];
+    fd_set readSet;
+    fd_set writeSet;
     int opt;//i
     int set_sock_opt;
     struct sockaddr_in address;
@@ -40,6 +45,7 @@ typedef struct {
   char *pwd;
   char *old_pwd;
   char *username;
+  int fd;
   status_t status;
 } client_t;
 

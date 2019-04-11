@@ -18,5 +18,5 @@
 void check_help(char **command, int *new_socket, client_t *client)
 {
     (void) command, (void) client; 
-    dprintf(*new_socket, "%s %s\n", code_g[4].code, code_g[4].msg);
+    dprintf(*new_socket, "%s %s\r\n", code_g[4].code, code_g[4].msg);
 }

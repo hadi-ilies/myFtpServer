@@ -18,5 +18,5 @@
 void check_pwd(char **command, int *new_socket, client_t *client)
 {
     (void) command;
-    dprintf(*new_socket, "\"%s\"\n", client->pwd);
+    dprintf(*new_socket, "%s \"%s\" created\r\n", code_g[11].code, client->pwd);
 }
