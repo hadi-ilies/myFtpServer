@@ -36,12 +36,11 @@ static void ftp_commands(char **command, int *new_socket, server_t *server, clie
 
 static void exec_command(server_t *server, client_t *clients)
 {
-   // client_t client = {server->pwd, NULL, NULL, GUESS};
+    //todo put global path or your stuff will not works because your client are'nt in the same directory
 
-    //todo put global path your stuff will not works if your client are'ent in the same dir
-   for (int i = 0; i < NB_CLIENT; ++i) {
+    for (int i = 0; i < NB_CLIENT; ++i) {
         if (server->fds[i] != -1 && FD_ISSET(server->fds[i], &server->readSet)) {
-                read(server->fds[i], server->buffer, 4096);
+                read(server->fds[i], server->buffer, getpagesize());
                 char **command = split_c(server->buffer, " \n\t\r");
                
                 ftp_commands(command, &server->fds[i], server, &clients[i]);
@@ -51,7 +50,7 @@ static void exec_command(server_t *server, client_t *clients)
         }
     }
 }
-//todo remove static
+
 static void	init_fd_sets(server_t *server)
 {
     FD_ZERO(&server->readSet);
@@ -79,11 +78,21 @@ static int new_client(server_t *server)
     return -1;
 }
 
+/**
+ * NOTE : if getcwd parameter is NULL, the function will alloc a pointer and return the value wanted 
+ * */
+
+static void insert_path(server_t *server, client_t *client, char *path)
+{
+    chdir(server->pwd); //already checked
+    chdir(path); // already cheched
+    client->pwd = getcwd(NULL, 100);
+}
+
 void network_management(size_t port, char *path)
 {
     server_t server = init_socket(port, path);
     client_t *clients = malloc(sizeof(client_t) * NB_CLIENT);
-    int new_socket = 0;
     int fd = -1;
 
     if (!clients)
@@ -91,16 +100,15 @@ void network_management(size_t port, char *path)
     while (1) {
         init_fd_sets(&server);
         int return_val = select(FD_SETSIZE, &server.readSet, &server.writeSet, NULL, &server.tv);
-        
-        if (return_val > 0) {
-            if (FD_ISSET(server.sockfd, &server.readSet)) {
-                fd = new_client(&server);
-                fd == -1 ? EXIT_MSG(stderr, "too many many clients want to connect", 84) : 0;
-                client_t client = {server.pwd, NULL, NULL, fd, GUESS};
-                
-                clients[fd] = client; 
-            }
-            exec_command(&server, clients);
+
+        if (return_val > 0 && FD_ISSET(server.sockfd, &server.readSet)) {
+            (fd = new_client(&server)) == -1 ? EXIT_MSG(stderr, "too many many clients want to connect", 84) : 0;
+            client_t client = {NULL, NULL, NULL, fd, GUESS};
+
+            insert_path(&server, &client, path);
+            clients[fd] = client; 
         }
+        if (return_val > 0)
+            exec_command(&server, clients);
     }
 }

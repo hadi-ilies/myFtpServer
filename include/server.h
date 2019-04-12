@@ -8,6 +8,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <stdbool.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #define NB_CLIENT 20
@@ -92,7 +93,7 @@ void check_pwd(char **command, int *new_socket, client_t *client);
 void check_cdup(char **command, int *new_socket, client_t *client);
 void check_help(char **command, int *new_socket, client_t *client);
 
-//todo fix CDUP
+//TODO check Error arguments
 static const commands_t command_g[] = 
 {
     {GUESS, "USER", &check_user},

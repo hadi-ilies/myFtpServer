@@ -36,7 +36,7 @@ server_t init_socket(size_t port, char *path)
     bind(server.sockfd, (struct sockaddr *) &server.address, 
     sizeof(server.address));
     listen(server.sockfd, 6);
-    server.pwd = path;
+    server.pwd = getcwd(NULL, 100);
     for (size_t i = 0; i < NB_CLIENT; ++i)
         server.fds[i] = -1;
     return server;
