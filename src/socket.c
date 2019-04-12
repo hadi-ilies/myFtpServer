@@ -19,7 +19,7 @@
 #include "prototype.h"
 #include "server.h"
 
-server_t init_socket(size_t port, char *path)
+server_t init_socket(size_t port)
 {
     server_t server = {{0}};
 

@@ -17,8 +17,9 @@
 #include "prototype.h"
 #include "server.h"
 
-//todo strstr find another way LOL
+//todo strstr find another way to compare your char *
 //todo add server as parameter of pointer on func because i need it in QUIT Func
+
 static void ftp_commands(char **command, int *new_socket, server_t *server, client_t *client)
 {
     for (size_t i = 0; command_g[i].command != NULL; i++) {
@@ -44,9 +45,7 @@ static void exec_command(server_t *server, client_t *clients)
                 char **command = split_c(server->buffer, " \n\t\r");
                
                 ftp_commands(command, &server->fds[i], server, &clients[i]);
-                //printf("Buff : %s\n", server->buffer);
                 memset(server->buffer, '\0', 4096);
-                //dprintf(*server->fds[i], "[SERVER] reçu 5/5 !\n");
         }
     }
 }
@@ -91,7 +90,7 @@ static void insert_path(server_t *server, client_t *client, char *path)
 
 void network_management(size_t port, char *path)
 {
-    server_t server = init_socket(port, path);
+    server_t server = init_socket(port);
     client_t *clients = malloc(sizeof(client_t) * NB_CLIENT);
     int fd = -1;
 

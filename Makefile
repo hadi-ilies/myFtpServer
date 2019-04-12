@@ -25,6 +25,8 @@ SRC		=	$(SRCDIR)main.c \
 			$(COMMANDDIR)pwd_command.c \
 			$(COMMANDDIR)cdup_command.c \
 			$(COMMANDDIR)help_command.c \
+			$(COMMANDDIR)list_command.c \
+			$(COMMANDDIR)dele_command.c \
 
 OBJ		=	$(SRC:.c=.o)
 

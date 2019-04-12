@@ -64,6 +64,7 @@ static const user_table_t clients_g[] =
 };
 
 //todo have to write a better help message
+//NOTE : macros > static const. 
 static const code_t code_g[] =
 {
     {"120", "Service ready in nnn minutes."},
@@ -92,6 +93,8 @@ void check_cwd(char **command, int *new_socket, client_t *client);
 void check_pwd(char **command, int *new_socket, client_t *client);
 void check_cdup(char **command, int *new_socket, client_t *client);
 void check_help(char **command, int *new_socket, client_t *client);
+void check_list(char **command, int *new_socket, client_t *client);
+void check_dele(char **command, int *new_socket, client_t *client);
 
 //TODO check Error arguments
 static const commands_t command_g[] = 
@@ -104,5 +107,8 @@ static const commands_t command_g[] =
     {LOGGED, "PWD", &check_pwd},
     {LOGGED, "CDUP", &check_cdup},
     {GUESS, "HELP", &check_help},
+    {LOGGED, "LIST", &check_list},
+    {GUESS, "EXIT", &check_quit},
+    {LOGGED, "DELE", &check_dele},
     {GUESS, NULL, NULL}
 };
