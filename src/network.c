@@ -22,7 +22,10 @@
 
 static void ftp_commands(char **command, int *new_socket, server_t *server, client_t *client)
 {
-    for (size_t i = 0; command_g[i].command != NULL; i++) {
+    if (command == NULL || command[0] == NULL) {
+        dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
+        return;
+    } for (size_t i = 0; command_g[i].command != NULL; i++) {
         if (strcmp(command[0], command_g[i].command) == 0 
         && client->status == GUESS && command_g[i].status == LOGGED) {
             dprintf(*new_socket, "%s You must be logged to use this command\n", code_g[14].code);
@@ -43,7 +46,7 @@ static void exec_command(server_t *server, client_t *clients)
         if (server->fds[i] != -1 && FD_ISSET(server->fds[i], &server->readSet)) {
                 read(server->fds[i], server->buffer, getpagesize());
                 char **command = split_c(server->buffer, " \n\t\r");
-               
+
                 ftp_commands(command, &server->fds[i], server, &clients[i]);
                 memset(server->buffer, '\0', 4096);
         }
