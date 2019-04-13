@@ -17,25 +17,44 @@
 #include "prototype.h"
 #include "server.h"
 
+static size_t count_args(char **command)
+{
+    size_t nb_args = 0;
+
+    while (command[nb_args] != NULL)
+        nb_args++;
+    return nb_args - 1;
+}
+
 //todo strstr find another way to compare your char *
 //todo add server as parameter of pointer on func because i need it in QUIT Func
 
 static void ftp_commands(char **command, int *new_socket, server_t *server, client_t *client)
 {
-    if (command == NULL || command[0] == NULL) {
-        dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
-        return;
-    } for (size_t i = 0; command_g[i].command != NULL; i++) {
-        if (strcmp(command[0], command_g[i].command) == 0 
-        && client->status == GUESS && command_g[i].status == LOGGED) {
-            dprintf(*new_socket, "%s You must be logged to use this command\n", code_g[14].code);
-            continue;
-        }
+    for (size_t i = 0; command_g[i].command != NULL; i++) {
         if (strcmp(command[0], command_g[i].command) == 0)
             command_g[i].func(command, new_socket, client);
         if (strcmp(command[0], command_g[i].command) == 0 && strcmp(command[0], "QUIT") == 0)
             server->fds[client->fd] = -1;
     }
+}
+
+bool is_valid(char **command, int *new_socket, client_t *client)
+{
+    if (command == NULL || command[0] == NULL) {
+        dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
+        return false;
+    } for (size_t i = 0; command_g[i].command != NULL; i++) {
+        if (strcmp(command[0], command_g[i].command) == 0 
+        && client->status == GUESS && command_g[i].status == LOGGED) {
+            dprintf(*new_socket, "%s %s\r\n", code_g[15].code, code_g[15].msg);
+            return false;
+        } if (strcmp(command[0], command_g[i].command) == 0 && command_g[i].nb_args != count_args(command) && !command_g[i].optional_arg) {
+            dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
+            return false;
+        }
+    }
+    return true;
 }
 
 static void exec_command(server_t *server, client_t *clients)
@@ -47,7 +66,7 @@ static void exec_command(server_t *server, client_t *clients)
                 read(server->fds[i], server->buffer, getpagesize());
                 char **command = split_c(server->buffer, " \n\t\r");
 
-                ftp_commands(command, &server->fds[i], server, &clients[i]);
+                is_valid(command, &server->fds[i], &clients[i]) ? ftp_commands(command, &server->fds[i], server, &clients[i]) : 0;
                 memset(server->buffer, '\0', 4096);
         }
     }

@@ -54,6 +54,8 @@ typedef struct {
   status_t status;
   char *command;
   void (*func) (char **command, int *new_socket, client_t *client);
+  size_t nb_args;
+  bool optional_arg;
 } commands_t;
 
 static const user_table_t clients_g[] = 
@@ -82,7 +84,8 @@ static const code_t code_g[] =
     {"257", "\"PATHNAME\" created."},
     {"331", "User name okay, need password."},
     {"332", "Need account for login."},
-    {"xxx", "Error"}
+    {"xxx", "Error"},
+    {"530", "You must be logged to use this command"}
 };
 
 void check_user(char **command, int *new_socket, client_t *client);
@@ -97,18 +100,20 @@ void check_list(char **command, int *new_socket, client_t *client);
 void check_dele(char **command, int *new_socket, client_t *client);
 
 //TODO check Error arguments
+//todo create a var in struct to save nb arg and after that have to compare
+
 static const commands_t command_g[] = 
 {
-    {GUESS, "USER", &check_user},
-    {GUESS, "PASS", &check_password},
-    {GUESS, "QUIT", &check_quit},
-    {LOGGED, "NOPE", &check_noop},
-    {LOGGED, "CWD", &check_cwd},
-    {LOGGED, "PWD", &check_pwd},
-    {LOGGED, "CDUP", &check_cdup},
-    {GUESS, "HELP", &check_help},
-    {LOGGED, "LIST", &check_list},
-    {GUESS, "EXIT", &check_quit},
-    {LOGGED, "DELE", &check_dele},
-    {GUESS, NULL, NULL}
+    {GUESS, "USER", &check_user, 1, false},
+    {GUESS, "PASS", &check_password, 1, false},
+    {GUESS, "QUIT", &check_quit, 0, false},
+    {LOGGED, "NOPE", &check_noop, 0, false},
+    {LOGGED, "CWD", &check_cwd, 1, false},
+    {LOGGED, "PWD", &check_pwd, 0, false},
+    {LOGGED, "CDUP", &check_cdup, 0, false},
+    {GUESS, "HELP", &check_help, 0, true},
+    {LOGGED, "LIST", &check_list, 1, true},
+    {GUESS, "EXIT", &check_quit, 0, false},
+    {LOGGED, "DELE", &check_dele, 0, false},
+    {GUESS, NULL, NULL, 0, false}
 };
