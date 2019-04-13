@@ -12,6 +12,8 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <sys/types.h>
+#include <sys/wait.h> 
 #include <errno.h>
 #include "server.h"
 
@@ -19,22 +21,12 @@
 
 void check_dele(char **command, int *new_socket, client_t *client)
 {
-    pid_t pid = fork();
-    int init = dup(1);
     (void) client;
-
-    if (pid == -1) {
-        printf("Error: FORK failed\n");
-        dprintf(*new_socket, "%s %s\r\n", code_g[2].code, code_g[2].msg);
-        dprintf(*new_socket, "%s %s\r\n", code_g[7].code, code_g[7].msg);
-        return;
-    } if (pid == 0) {
-        dup2(*new_socket, 1);
-        execl("/bin/rm", command[1]);
+    if (access(command[1], F_OK) != 0) {
         dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
-    } else {
-        dup2(1, init);
-        dprintf(*new_socket, "%s %s\r\n", code_g[2].code, code_g[2].msg);
-        dprintf(*new_socket, "%s %s\r\n", code_g[7].code, code_g[7].msg);
-    }
+		return;
+	}
+	if (remove(command[1]) == -1)
+        dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
+    dprintf(*new_socket, "%s %s\r\n", code_g[10].code, code_g[10].msg);
 }

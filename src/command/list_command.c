@@ -12,6 +12,8 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <sys/types.h>
+#include <sys/wait.h> 
 #include <errno.h>
 #include "server.h"
 
@@ -19,7 +21,7 @@
 void check_list(char **command, int *new_socket, client_t *client)
 {
     pid_t pid = fork();
-    int tmp = dup(1);
+    int tmp = dup(STDOUT_FILENO);
 
     (void) client;
     if (pid == -1) {
@@ -29,7 +31,7 @@ void check_list(char **command, int *new_socket, client_t *client)
     } 
     dup2(*new_socket, STDOUT_FILENO);
     if (pid == 0) {
-        execl("/bin/ls", command[1] == NULL ? "." : command[1]);
+        execl("/bin/ls", "ls", "-l", command[1] == NULL ? "." : command[1], NULL);
         dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
     } else {
             waitpid(pid, 0, WSTOPPED);

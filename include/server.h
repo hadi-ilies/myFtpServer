@@ -114,6 +114,6 @@ static const commands_t command_g[] =
     {GUESS, "HELP", &check_help, 0, true},
     {LOGGED, "LIST", &check_list, 1, true},
     {GUESS, "EXIT", &check_quit, 0, false},
-    {LOGGED, "DELE", &check_dele, 0, false},
+    {LOGGED, "DELE", &check_dele, 1, false},
     {GUESS, NULL, NULL, 0, false}
 };
