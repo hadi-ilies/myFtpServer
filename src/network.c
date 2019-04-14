@@ -41,19 +41,20 @@ static void ftp_commands(char **command, int *new_socket, server_t *server, clie
 
 bool is_valid(char **command, int *new_socket, client_t *client)
 {
-    if (command == NULL || command[0] == NULL) {
-        dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
-        return false;
-    } for (size_t i = 0; command_g[i].command != NULL; i++) {
+    bool is_valid_command = false;
+
+    if (command == NULL || command[0] == NULL)
+        return dprintf(*new_socket, "%s %s\r\n", code_g[16].code, code_g[16].msg), false;
+    for (size_t i = 0; command_g[i].command != NULL; i++) {
+        if (strcmp(command[0], command_g[i].command) == 0)
+            is_valid_command = true;
         if (strcmp(command[0], command_g[i].command) == 0 
-        && client->status == GUESS && command_g[i].status == LOGGED) {
-            dprintf(*new_socket, "%s %s\r\n", code_g[15].code, code_g[15].msg);
-            return false;
-        } if (strcmp(command[0], command_g[i].command) == 0 && command_g[i].nb_args != count_args(command) && !command_g[i].optional_arg) {
-            dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
-            return false;
-        }
-    }
+        && client->status == GUESS && command_g[i].status == LOGGED)
+            return dprintf(*new_socket, "%s %s\r\n", code_g[15].code, code_g[15].msg), false;
+        if (strcmp(command[0], command_g[i].command) == 0 && command_g[i].nb_args != count_args(command) && !command_g[i].optional_arg)
+            return dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg), false;
+    } if (!is_valid_command)
+        return dprintf(*new_socket, "%s %s\r\n", code_g[16].code, code_g[16].msg), false;
     return true;
 }
 

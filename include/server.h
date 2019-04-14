@@ -85,7 +85,8 @@ static const code_t code_g[] =
     {"331", "User name okay, need password."},
     {"332", "Need account for login."},
     {"xxx", "Error"},
-    {"530", "You must be logged to use this command"}
+    {"530", "You must be logged to use this command"},
+    {"500", "unknow command"}
 };
 
 void check_user(char **command, int *new_socket, client_t *client);
