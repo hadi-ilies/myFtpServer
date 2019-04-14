@@ -27,7 +27,7 @@ static size_t count_args(char **command)
 }
 
 //todo strstr find another way to compare your char *
-//todo add server as parameter of pointer on func because i need it in QUIT Func
+//todo add server as parameter of the pointer on func, because i need it in QUIT Func
 
 static void ftp_commands(char **command, int *new_socket, server_t *server, client_t *client)
 {
@@ -52,7 +52,7 @@ bool is_valid(char **command, int *new_socket, client_t *client)
         && client->status == GUESS && command_g[i].status == LOGGED)
             return dprintf(*new_socket, "%s %s\r\n", code_g[15].code, code_g[15].msg), false;
         if (strcmp(command[0], command_g[i].command) == 0 && command_g[i].nb_args != count_args(command) && !command_g[i].optional_arg)
-            return dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg), false;
+            return dprintf(*new_socket, "%s %s\r\n", code_g[16].code, code_g[16].msg), false;
     } if (!is_valid_command)
         return dprintf(*new_socket, "%s %s\r\n", code_g[16].code, code_g[16].msg), false;
     return true;
@@ -68,7 +68,7 @@ static void exec_command(server_t *server, client_t *clients)
                 char **command = split_c(server->buffer, " \n\t\r");
 
                 is_valid(command, &server->fds[i], &clients[i]) ? ftp_commands(command, &server->fds[i], server, &clients[i]) : 0;
-                memset(server->buffer, '\0', 4096);
+                memset(server->buffer, '\0', getpagesize());
         }
     }
 }

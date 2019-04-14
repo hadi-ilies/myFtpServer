@@ -19,7 +19,7 @@ void check_cdup(char **command, int *new_socket, client_t *client)
 {
     (void) command;
     if (chdir(client->old_pwd) != 0) {
-        dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
+        dprintf(*new_socket, "%s %s\r\n", code_g[15].code, code_g[15].msg);
         return;
     }
     dprintf(*new_socket, "%s %s\r\n", code_g[3].code, code_g[3].msg);

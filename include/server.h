@@ -86,7 +86,8 @@ static const code_t code_g[] =
     {"332", "Need account for login."},
     {"xxx", "Error"},
     {"530", "You must be logged to use this command"},
-    {"500", "unknow command"}
+    {"500", "unknow command"},
+    {"550", "failed to change directory"}
 };
 
 void check_user(char **command, int *new_socket, client_t *client);
@@ -116,5 +117,6 @@ static const commands_t command_g[] =
     {LOGGED, "LIST", &check_list, 1, true},
     {GUESS, "EXIT", &check_quit, 0, false},
     {LOGGED, "DELE", &check_dele, 1, false},
+    {LOGGED, "NOOP", &check_noop, 0, false},
     {GUESS, NULL, NULL, 0, false}
 };
