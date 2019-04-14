@@ -23,7 +23,7 @@ void check_password(char **command, int *new_socket, client_t *client)
     char *pass = command[1];
 
     for (size_t i = 0; clients_g[i].user != NULL; i++) {
-        printf("\"PASS = %s | username = %s\"\n", pass, client->username);
+        //printf("\"PASS = %s | username = %s\"\n", pass, client->username);
         if (client->username != NULL && strstr(client->username, clients_g[i].user) != NULL
         && strstr(pass, clients_g[i].pass) != NULL) {
             dprintf(*new_socket, "%s %s\r\n", code_g[9].code, code_g[9].msg);
@@ -31,5 +31,5 @@ void check_password(char **command, int *new_socket, client_t *client)
             return;
         }
     }
-    dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
+    dprintf(*new_socket, "%s %s\r\n", code_g[15].code, code_g[14].msg);
 }
