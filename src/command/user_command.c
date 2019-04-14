@@ -26,10 +26,10 @@ void check_user(char **command, int *new_socket, client_t *client)
         if (strcmp(name, clients_g[i].user) == 0) {
             dprintf(*new_socket, "%s %s\r\n", code_g[12].code, code_g[12].msg);
             client->username = strdup(name);
-           if (strcmp(client->username, "Anonymous") == 0) {
-                command[1] = "";
-                check_password(command, new_socket, client);
-            }
+           //if (strcmp(client->username, "Anonymous") == 0) {
+           //     command[1] = "";
+           //     check_password(command, new_socket, client);
+           // }
             return;
         }
     }

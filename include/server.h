@@ -105,7 +105,7 @@ void check_dele(char **command, int *new_socket, client_t *client);
 static const commands_t command_g[] = 
 {
     {GUESS, "USER", &check_user, 1, false},
-    {GUESS, "PASS", &check_password, 1, false},
+    {GUESS, "PASS", &check_password, 1, true},
     {GUESS, "QUIT", &check_quit, 0, false},
     {LOGGED, "NOPE", &check_noop, 0, false},
     {LOGGED, "CWD", &check_cwd, 1, false},
