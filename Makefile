@@ -28,6 +28,9 @@ SRC		=	$(SRCDIR)main.c \
 			$(COMMANDDIR)list_command.c \
 			$(COMMANDDIR)dele_command.c \
 			$(COMMANDDIR)pasv_command.c \
+			$(COMMANDDIR)port_command.c \
+			$(COMMANDDIR)retr_command.c \
+
 
 OBJ		=	$(SRC:.c=.o)
 

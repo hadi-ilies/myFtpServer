@@ -98,7 +98,11 @@ static const code_t code_g[] =
     {"xxx", "Error"},
     {"530", "You must be logged to use this command"},
     {"500", "unknow command"},
-    {"550", "failed to change directory"}
+    {"550", "failed to change directory"},
+    {"425", "Use PORT or PASV first."},
+    {"550", "No such file / Can't read file."},
+    {"150", "Opening BINARY mode data connection"},
+    {"226", "Transfer complete."}
 };
 
 void check_user(char **command, int *new_socket, client_t *client);
@@ -112,6 +116,8 @@ void check_help(char **command, int *new_socket, client_t *client);
 void check_list(char **command, int *new_socket, client_t *client);
 void check_dele(char **command, int *new_socket, client_t *client);
 void check_pasv(char **command, int *new_socket, client_t *client);
+void check_port(char **command, int *new_socket, client_t *client);
+void check_retr(char **command, int *new_socket, client_t *client);
 
 //TODO check Error arguments
 //todo create a var in struct to save nb arg and after that have to compare
@@ -131,5 +137,7 @@ static const commands_t command_g[] =
     {LOGGED, "DELE", &check_dele, 1, false},
     {LOGGED, "NOOP", &check_noop, 0, false},
     {LOGGED, "PASV", &check_pasv, 0, false},
+    {LOGGED, "PORT", &check_port, 1, false},
+    {LOGGED, "RETR", &check_retr, 1, false},
     {GUESS, NULL, NULL, 0, false}
 };
