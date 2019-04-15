@@ -15,6 +15,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <errno.h>
 #include "prototype.h"
 #include "server.h"
@@ -29,7 +30,7 @@ server_t init_socket(size_t port)
     SO_REUSEADDR | SO_REUSEPORT, 
     (const char *)&server.opt, sizeof(server.opt));
     server.addrlen = sizeof(server.address);
-    memset(server.buffer, '\0', 4096);
+    memset(server.buffer, '\0', getpagesize());
     server.address.sin_family = AF_INET;
     server.address.sin_addr.s_addr = INADDR_ANY;
     server.address.sin_port = htons(port);
@@ -37,6 +38,7 @@ server_t init_socket(size_t port)
     sizeof(server.address));
     listen(server.sockfd, 6);
     server.pwd = getcwd(NULL, 100);
+    server.ip_addr = inet_ntoa(server.address.sin_addr);
     for (size_t i = 0; i < NB_CLIENT; ++i)
         server.fds[i] = -1;
     return server;

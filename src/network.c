@@ -64,7 +64,11 @@ static void exec_command(server_t *server, client_t *clients)
 
     for (int i = 0; i < NB_CLIENT; ++i) {
         if (server->fds[i] != -1 && FD_ISSET(server->fds[i], &server->readSet)) {
-                read(server->fds[i], server->buffer, getpagesize());
+                //read(server->fds[i], server->buffer, getpagesize());
+                FILE *fd = fdopen(server->fds[i], "r");
+                
+                fgets(server->buffer, getpagesize(), fd);
+                printf("LOL\n");
                 char **command = split_c(server->buffer, " \n\t\r");
 
                 is_valid(command, &server->fds[i], &clients[i]) ? ftp_commands(command, &server->fds[i], server, &clients[i]) : 0;
@@ -124,8 +128,8 @@ void network_management(size_t port, char *path)
         int return_val = select(FD_SETSIZE, &server.readSet, &server.writeSet, NULL, &server.tv);
 
         if (return_val > 0 && FD_ISSET(server.sockfd, &server.readSet)) {
-            (fd = new_client(&server)) == -1 ? EXIT_MSG(stderr, "too many many clients want to connect", 84) : 0;
-            client_t client = {NULL, NULL, NULL, fd, GUESS};
+            (fd = new_client(&server)) == -1 ? EXIT_MSG(stderr, "too many people want to connect", 84) : 0;
+            client_t client = {NULL, NULL, NULL, fd, GUESS, NONE};
 
             insert_path(&server, &client, path);
             clients[fd] = client; 

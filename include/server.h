@@ -17,6 +17,13 @@ typedef enum {
   GUESS,
   LOGGED
 } status_t;  
+
+typedef enum {
+  NONE,
+  PASV,
+  ACTIVE
+} client_mode_t;  
+
 typedef struct
 {
     struct timeval tv;
@@ -30,6 +37,8 @@ typedef struct
     int addrlen;
     char buffer[4096];
     char *pwd;
+    char *ip_addr;
+    int port;
 } server_t;
 
 typedef struct {
@@ -48,6 +57,8 @@ typedef struct {
   char *username;
   int fd;
   status_t status;
+  client_mode_t mode;
+  server_t server;
 } client_t;
 
 typedef struct {
@@ -100,6 +111,7 @@ void check_cdup(char **command, int *new_socket, client_t *client);
 void check_help(char **command, int *new_socket, client_t *client);
 void check_list(char **command, int *new_socket, client_t *client);
 void check_dele(char **command, int *new_socket, client_t *client);
+void check_pasv(char **command, int *new_socket, client_t *client);
 
 //TODO check Error arguments
 //todo create a var in struct to save nb arg and after that have to compare
@@ -118,5 +130,6 @@ static const commands_t command_g[] =
     {GUESS, "EXIT", &check_quit, 0, false},
     {LOGGED, "DELE", &check_dele, 1, false},
     {LOGGED, "NOOP", &check_noop, 0, false},
+    {LOGGED, "PASV", &check_pasv, 0, false},
     {GUESS, NULL, NULL, 0, false}
 };

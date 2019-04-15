@@ -18,7 +18,7 @@
 #include "server.h"
 
 //todo check error for the delete command. I think something going wrong with dup/dup2
-
+//NOTE RETR == cat
 void check_dele(char **command, int *new_socket, client_t *client)
 {
     (void) client;

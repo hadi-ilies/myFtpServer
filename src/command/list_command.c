@@ -18,7 +18,7 @@
 #include "server.h"
 
 //todo check error for the ls command
-void check_list(char **command, int *new_socket, client_t *client)
+static void list(char **command, int *new_socket, int client_socket, client_t *client)
 {
     pid_t pid = fork();
     int tmp = dup(STDOUT_FILENO);
@@ -28,15 +28,30 @@ void check_list(char **command, int *new_socket, client_t *client)
         dprintf(*new_socket, "%s %s\r\n", code_g[2].code, code_g[2].msg);
         dprintf(*new_socket, "%s %s\r\n", code_g[7].code, code_g[7].msg);
         return;
-    } 
-    dup2(*new_socket, STDOUT_FILENO);
+    }
+    dup2(client_socket, STDOUT_FILENO);
     if (pid == 0) {
         execl("/bin/ls", "ls", "-l", command[1] == NULL ? "." : command[1], NULL);
         dprintf(*new_socket, "%s %s\r\n", code_g[14].code, code_g[14].msg);
     } else {
-            waitpid(pid, 0, WSTOPPED);
+        waitpid(pid, 0, WSTOPPED);
     }
     dup2(tmp, STDOUT_FILENO);
     dprintf(*new_socket, "%s %s\r\n", code_g[2].code, code_g[2].msg);
     //maybe i will need to add a new message here
+}
+
+void check_list(char **command, int *new_socket, client_t *client)
+{
+    int fd = 0;
+    
+    if (client->mode == PASV) {
+        fd = accept(client->server.sockfd, 
+        (struct sockaddr *)&client->server.address, (socklen_t*) &client->server.addrlen);
+        list(command, new_socket, fd, client);
+        client->mode = NONE;
+    } else if (client->mode == ACTIVE)
+        list(command, new_socket, fd, client);
+    else
+        dprintf(*new_socket, "%s %s\n", code_g[14].code, code_g[14].msg);
 }
