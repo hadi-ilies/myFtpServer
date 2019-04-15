@@ -118,6 +118,7 @@ void check_dele(char **command, int *new_socket, client_t *client);
 void check_pasv(char **command, int *new_socket, client_t *client);
 void check_port(char **command, int *new_socket, client_t *client);
 void check_retr(char **command, int *new_socket, client_t *client);
+void check_stor(char **command, int *new_socket, client_t *client);
 
 //TODO check Error arguments
 //todo create a var in struct to save nb arg and after that have to compare
@@ -139,5 +140,6 @@ static const commands_t command_g[] =
     {LOGGED, "PASV", &check_pasv, 0, false},
     {LOGGED, "PORT", &check_port, 1, false},
     {LOGGED, "RETR", &check_retr, 1, false},
+    {LOGGED, "STOR", &check_stor, 1, false},
     {GUESS, NULL, NULL, 0, false}
 };

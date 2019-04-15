@@ -30,7 +30,7 @@ SRC		=	$(SRCDIR)main.c \
 			$(COMMANDDIR)pasv_command.c \
 			$(COMMANDDIR)port_command.c \
 			$(COMMANDDIR)retr_command.c \
-
+			$(COMMANDDIR)stor_command.c \
 
 OBJ		=	$(SRC:.c=.o)
 
