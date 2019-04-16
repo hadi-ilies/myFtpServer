@@ -44,6 +44,7 @@ void check_stor(char **command, int *new_socket, client_t *client)
         fd = accept(client->server.sockfd, 
         (struct sockaddr *)&client->server.address, (socklen_t*) &client->server.addrlen);
         stor(command, new_socket, fd);
+        close(fd);
         client->mode = NONE;
     } else if (client->mode == ACTIVE)
         stor(command, new_socket, fd);

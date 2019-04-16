@@ -48,6 +48,8 @@ void check_list(char **command, int *new_socket, client_t *client)
         fd = accept(client->server.sockfd, 
         (struct sockaddr *)&client->server.address, (socklen_t*) &client->server.addrlen);
         list(command, new_socket, fd);
+        //shutdown(fd, SHUT_RDWR);
+        close(fd);
         client->mode = NONE;
     } else if (client->mode == ACTIVE)
         list(command, new_socket, fd);

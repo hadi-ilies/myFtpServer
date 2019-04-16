@@ -45,6 +45,7 @@ void check_retr(char **command, int *new_socket, client_t *client)
         fd = accept(client->server.sockfd, 
         (struct sockaddr *)&client->server.address, (socklen_t*) &client->server.addrlen);
         retr(command, new_socket, fd);
+        close(fd);
         client->mode = NONE;
     } else if (client->mode == ACTIVE)
         retr(command, new_socket, fd);
