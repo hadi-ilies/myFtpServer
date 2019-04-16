@@ -85,8 +85,7 @@ static const code_t code_g[] =
     {"125", "Data connection already open; transfer starting."},
     {"150", "File status okay; about to open data connection."},
     {"200", "Command okay."},
-    {"214", "commands available are : \nUSER\nPASS\nHELP\nPWD\nCWD\n"
-    "CDUP\nNOPE\nQUIT\n"},
+    {"214", "commands available are : USER PASS HELP PWD CWD CDUP NOPE QUIT"},
     {"220", "Service ready for new user."},
     {"221", "Service closing control connection."},
     {"226", "Closing data connection."},
@@ -104,7 +103,8 @@ static const code_t code_g[] =
     {"550", "No such file / Can't read file."},
     {"150", "Opening BINARY mode data connection"},
     {"226", "Transfer complete."},
-    {"550", "Permission denied."}
+    {"550", "Permission denied."},
+    {"550", "CWD Error"},
 };
 
 void check_user(char **command, int *new_socket, client_t *client);
