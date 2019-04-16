@@ -64,11 +64,9 @@ static void exec_command(server_t *server, client_t *clients)
 
     for (int i = 0; i < NB_CLIENT; ++i) {
         if (server->fds[i] != -1 && FD_ISSET(server->fds[i], &server->readSet)) {
-                //read(server->fds[i], server->buffer, getpagesize());
                 FILE *fd = fdopen(server->fds[i], "r");
                 
                 fgets(server->buffer, getpagesize(), fd);
-                printf("LOL\n");
                 char **command = split_c(server->buffer, " \n\t\r");
 
                 is_valid(command, &server->fds[i], &clients[i]) ? ftp_commands(command, &server->fds[i], server, &clients[i]) : 0;

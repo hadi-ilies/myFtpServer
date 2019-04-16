@@ -102,7 +102,8 @@ static const code_t code_g[] =
     {"425", "Use PORT or PASV first."},
     {"550", "No such file / Can't read file."},
     {"150", "Opening BINARY mode data connection"},
-    {"226", "Transfer complete."}
+    {"226", "Transfer complete."},
+    {"550", "Permission denied."}
 };
 
 void check_user(char **command, int *new_socket, client_t *client);
