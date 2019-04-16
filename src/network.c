@@ -111,6 +111,21 @@ static void insert_path(server_t *server, client_t *client, char *path)
     chdir(server->pwd); //already checked
     chdir(path); // already cheched
     client->pwd = getcwd(NULL, 100);
+    client->home = getcwd(NULL, 100);
+}
+
+static client_t init_client(int fd)
+{   
+    client_t client;
+
+    client.fd = fd;
+    client.home = NULL;
+    client.pwd = NULL;
+    client.old_pwd = NULL;
+    client.username = NULL;
+    client.status = GUESS;
+    client.mode = NONE;
+    return client;
 }
 
 void network_management(size_t port, char *path)
@@ -127,7 +142,7 @@ void network_management(size_t port, char *path)
 
         if (return_val > 0 && FD_ISSET(server.sockfd, &server.readSet)) {
             (fd = new_client(&server)) == -1 ? EXIT_MSG(stderr, "too many people want to connect", 84) : 0;
-            client_t client = {NULL, NULL, NULL, fd, GUESS, NONE};
+            client_t client = init_client(fd);
 
             insert_path(&server, &client, path);
             clients[fd] = client; 

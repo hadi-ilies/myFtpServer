@@ -20,6 +20,8 @@ void check_cwd(char **command, int *new_socket, client_t *client)
     char *pass = command[1];
     char *tmp = getcwd(NULL, 100);
 
+    if (command[1] == NULL)
+        pass = client->home;
     if (chdir(pass) != 0) {
         dprintf(*new_socket, "%s %s\r\n", code_g[17].code, code_g[17].msg);
         return;

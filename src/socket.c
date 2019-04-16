@@ -22,8 +22,10 @@
 
 server_t init_socket(size_t port)
 {
-    server_t server = {{0}};
+    server_t server;
+    struct timeval tv = {0};
 
+    server.tv = tv;
     server.sockfd = socket(AF_INET, SOCK_STREAM, 0);
     server.opt = 0;
     server.set_sock_opt = setsockopt(server.sockfd, SOL_SOCKET, 

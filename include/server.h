@@ -52,6 +52,7 @@ typedef struct {
 } code_t;
 
 typedef struct {
+  char *home;
   char *pwd;
   char *old_pwd;
   char *username;
@@ -130,10 +131,10 @@ static const commands_t command_g[] =
     {GUESS, "PASS", &check_password, 1, true},
     {GUESS, "QUIT", &check_quit, 0, false},
     {LOGGED, "NOPE", &check_noop, 0, false},
-    {LOGGED, "CWD", &check_cwd, 1, false},
+    {LOGGED, "CWD", &check_cwd, 1, true},
     {LOGGED, "PWD", &check_pwd, 0, false},
     {LOGGED, "CDUP", &check_cdup, 0, false},
-    {GUESS, "HELP", &check_help, 0, true},
+    {GUESS, "HELP", &check_help, 1, true},
     {LOGGED, "LIST", &check_list, 1, true},
     {GUESS, "EXIT", &check_quit, 0, false},
     {LOGGED, "DELE", &check_dele, 1, false},
