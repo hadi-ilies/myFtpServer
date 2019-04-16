@@ -46,8 +46,10 @@ void check_stor(char **command, int *new_socket, client_t *client)
         stor(command, new_socket, fd);
         close(fd);
         client->mode = NONE;
-    } else if (client->mode == ACTIVE)
-        stor(command, new_socket, fd);
-    else
+    } else if (client->mode == ACTIVE) {
+        stor(command, new_socket, client->server.sockfd);
+        close(client->server.sockfd);
+        client->mode = NONE;
+     }  else
         dprintf(*new_socket, "%s %s\n", code_g[18].code, code_g[18].msg);
 }

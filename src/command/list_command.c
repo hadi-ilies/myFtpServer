@@ -51,8 +51,11 @@ void check_list(char **command, int *new_socket, client_t *client)
         //shutdown(fd, SHUT_RDWR);
         close(fd);
         client->mode = NONE;
-    } else if (client->mode == ACTIVE)
-        list(command, new_socket, fd);
-    else
+    } else if (client->mode == ACTIVE) {
+        printf("fd = %d\n", client->server.sockfd);
+        list(command, new_socket, client->server.sockfd);
+        close(client->server.sockfd);
+        client->mode = NONE;
+    } else
         dprintf(*new_socket, "%s %s\n", code_g[18].code, code_g[18].msg);
 }

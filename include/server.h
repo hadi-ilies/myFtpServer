@@ -105,6 +105,8 @@ static const code_t code_g[] =
     {"226", "Transfer complete."},
     {"550", "Permission denied."},
     {"550", "CWD Error"},
+    {"520", "Please specify an IP address and port."},
+    {"200", "Entering Active Mode"}
 };
 
 void check_user(char **command, int *new_socket, client_t *client);
@@ -140,7 +142,7 @@ static const commands_t command_g[] =
     {LOGGED, "DELE", &check_dele, 1, false},
     {LOGGED, "NOOP", &check_noop, 0, false},
     {LOGGED, "PASV", &check_pasv, 0, false},
-    {LOGGED, "PORT", &check_port, 1, false},
+    {LOGGED, "PORT", &check_port, 1, true},
     {LOGGED, "RETR", &check_retr, 1, false},
     {LOGGED, "STOR", &check_stor, 1, false},
     {GUESS, NULL, NULL, 0, false}
