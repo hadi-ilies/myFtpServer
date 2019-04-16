@@ -26,7 +26,9 @@ void check_dele(char **command, int *new_socket, client_t *client)
         dprintf(*new_socket, "%s %s\r\n", code_g[22].code, code_g[22].msg);
 		return;
 	}
-	if (unlink(command[1]) == -1)
+	if (unlink(command[1]) == -1) {
         dprintf(*new_socket, "%s %s\r\n", code_g[22].code, code_g[22].msg);
+        return;
+    }
     dprintf(*new_socket, "%s %s\r\n", code_g[10].code, code_g[10].msg);
 }
