@@ -32,9 +32,8 @@ static void stor(char **command, int *new_socket, int client_socket)
             PRT_SE(fd_file, "%s", buffer);
         PRT_SE(*new_socket,  code_g[21].code, code_g[21].msg);
         close(fd_file);
-    } else {
+    } else
         PRT_SE(*new_socket, code_g[14].code, code_g[14].msg);
-    }
 }
 
 void check_stor(char **command, int *new_socket, client_t *client)

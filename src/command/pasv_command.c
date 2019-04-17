@@ -17,12 +17,12 @@
 #include "server.h"
 #include "prototype.h"
 
-static void	passive_msg(int *new_socket, server_t *server)
+static void passive_msg(int *new_socket, server_t *server)
 {
     size_t ip1 = 0;
-        size_t ip2 = 0;
-        size_t ip3 = 0;
-        size_t ip4 = 0;
+    size_t ip2 = 0;
+    size_t ip3 = 0;
+    size_t ip4 = 0;
     char *ip = inet_ntoa(server->address.sin_addr);
 
     sscanf(ip, "%ld.%ld.%ld.%ld", &ip1, &ip2, &ip3, &ip4);
@@ -42,7 +42,7 @@ static int create_passive_socket(client_t *client)
     client->server.address.sin_family = AF_INET;
     client->server.address.sin_addr.s_addr = INADDR_ANY;
     client->server.address.sin_port = 0;
-    if (bind(client->server.sockfd, (struct sockaddr*)&client->server.address,
+    if (bind(client->server.sockfd, (struct sockaddr*) &client->server.address,
              sizeof(client->server.address)) == -1)
         EXIT_MSG(stderr, "Error: bind failed", 84);
     if (listen(client->server.sockfd, 1) == -1)
@@ -52,7 +52,6 @@ static int create_passive_socket(client_t *client)
         EXIT_MSG(stderr, "Error: getsockname failed", 84);
     return ntohs(client->server.address.sin_port);
 }
-
 
 void check_pasv(char **command, int *new_socket, client_t *client)
 {

@@ -13,8 +13,8 @@
 #include <dirent.h>
 #include "prototype.h"
 
-static const char *usage_g = "USAGE:\t./myftp port path\n\tport is" 
-"the port number on which the server socket listens\n\t" 
+static const char *usage_g = "USAGE:\t./myftp port path\n\tport is"
+"the port number on which the server socket listens\n\t"
 "path is the path to the home directory for the Anonymous user\n";
 
 static bool isanum(const char *str)
@@ -31,7 +31,7 @@ static bool isanum(const char *str)
 static bool parsing(char **argv)
 {
     DIR *fd = opendir(argv[2]);
-    
+
     if (fd == NULL)
         return false;
     if (isanum(argv[1]) == false)

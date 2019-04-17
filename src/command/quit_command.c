@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2019
-**
+** QUIT
 ** File description:
-**
+** QUIT
 */
 
 #include <stdlib.h>

@@ -57,9 +57,7 @@ static void init_fd_sets(server_t *server)
         FD_SET(server->fds[i], &server->writeSet);
     }
 }
-/**
- * NOTE : if getcwd parameter is NULL, the function will alloc a pointer and return the value wanted
- **/
+
 void network_management(size_t port, char *path)
 {
     server_t server = init_socket(port);

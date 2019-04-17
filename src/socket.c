@@ -17,6 +17,12 @@
 #include "prototype.h"
 #include "server.h"
 
+#define SET_SOCK_OPT setsockopt(server.sockfd, SOL_SOCKET, \
+SO_REUSEADDR | SO_REUSEPORT, (const char *) &server.opt, sizeof(server.opt))
+
+#define BIND bind(server.sockfd, (struct sockaddr *) &server.address,\
+sizeof(server.address))
+
 server_t init_socket(size_t port)
 {
     server_t server;
@@ -25,14 +31,13 @@ server_t init_socket(size_t port)
     server.tv = tv;
     server.sockfd = socket(AF_INET, SOCK_STREAM, 0);
     server.opt = 0;
-    server.set_sock_opt = setsockopt(server.sockfd, SOL_SOCKET,
-    SO_REUSEADDR | SO_REUSEPORT, (const char *) &server.opt, sizeof(server.opt));
+    server.set_sock_opt = SET_SOCK_OPT;
     server.addrlen = sizeof(server.address);
     memset(server.buffer, '\0', getpagesize());
     server.address.sin_family = AF_INET;
     server.address.sin_addr.s_addr = INADDR_ANY;
     server.address.sin_port = htons(port);
-    bind(server.sockfd, (struct sockaddr *) &server.address, sizeof(server.address));
+    BIND;
     listen(server.sockfd, 6);
     server.pwd = getcwd(NULL, 100);
     server.ip_addr = inet_ntoa(server.address.sin_addr);
