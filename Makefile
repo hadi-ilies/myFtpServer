@@ -17,6 +17,8 @@ SRC		=	$(SRCDIR)main.c \
 			$(SRCDIR)network.c \
 			$(SRCDIR)split.c \
 			$(SRCDIR)socket.c \
+			$(SRCDIR)client.c \
+			$(SRCDIR)check_valid_command.c \
 			$(COMMANDDIR)user_command.c \
 			$(COMMANDDIR)pass_command.c \
 			$(COMMANDDIR)noop_command.c \

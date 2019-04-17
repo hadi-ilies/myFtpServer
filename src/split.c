@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2019
-**
+** split
 ** File description:
-**
+** split
 */
 
 #include <string.h>

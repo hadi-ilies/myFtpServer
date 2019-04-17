@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2019
-**
+** help
 ** File description:
-**
+** help
 */
 
 #include <stdlib.h>
@@ -13,10 +13,11 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <errno.h>
+#include "prototype.h"
 #include "server.h"
 
 void check_help(char **command, int *new_socket, client_t *client)
 {
-    (void) command, (void) client; 
-    dprintf(*new_socket, "%s %s\r\n", code_g[4].code, code_g[4].msg);
+    (void) command, (void) client;
+    PRT_SE(*new_socket, code_g[4].code, code_g[4].msg);
 }
