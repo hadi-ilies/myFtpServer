@@ -49,6 +49,7 @@ void check_retr(char **command, int *new_socket, client_t *client)
         close(fd);
         client->mode = NONE;
     } else if (client->mode == ACTIVE) {
+        create_active_socket(client);
         retr(command, new_socket, client->server.sockfd);
         close(client->server.sockfd);
         client->mode = NONE;
