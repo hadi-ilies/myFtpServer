@@ -78,6 +78,6 @@ void network_management(size_t port, char *path)
 
             clients[fd] = client;
         } if (return_val > 0)
-              exec_command(&server, clients);
+            exec_command(&server, clients);
     }
 }

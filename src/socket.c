@@ -19,7 +19,6 @@
 
 #define SET_SOCK_OPT setsockopt(server.sockfd, SOL_SOCKET, \
 SO_REUSEADDR | SO_REUSEPORT, (const char *) &server.opt, sizeof(server.opt))
-
 #define BIND bind(server.sockfd, (struct sockaddr *) &server.address,\
 sizeof(server.address))
 

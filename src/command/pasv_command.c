@@ -43,7 +43,7 @@ static int create_passive_socket(client_t *client)
     client->server.address.sin_addr.s_addr = INADDR_ANY;
     client->server.address.sin_port = 0;
     if (bind(client->server.sockfd, (struct sockaddr*) &client->server.address,
-             sizeof(client->server.address)) == -1)
+        sizeof(client->server.address)) == -1)
         EXIT_MSG(stderr, "Error: bind failed", 84);
     if (listen(client->server.sockfd, 1) == -1)
         EXIT_MSG(stderr, "Error: listen failed", 84);

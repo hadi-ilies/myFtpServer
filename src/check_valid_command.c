@@ -44,6 +44,6 @@ bool is_valid(char **command, int *new_socket, client_t *client)
             && !command_g[i].optional_arg)
             return PRT_SE(*new_socket, code_g[16].code, code_g[16].msg), false;
     } if (!is_valid_command)
-          return PRT_SE(*new_socket, code_g[16].code, code_g[16].msg), false;
+        return PRT_SE(*new_socket, code_g[16].code, code_g[16].msg), false;
     return true;
 }

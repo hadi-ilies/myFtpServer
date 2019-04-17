@@ -27,10 +27,10 @@ static void stor(char **command, int *new_socket, int client_socket)
     char buffer[getpagesize()];
 
     if (fd_file != -1) {
-        PRT_SE(*new_socket,  code_g[20].code, code_g[20].msg);
+        PRT_SE(*new_socket, code_g[20].code, code_g[20].msg);
         while (read(client_socket, buffer, getpagesize()) > 0)
             PRT_SE(fd_file, "%s", buffer);
-        PRT_SE(*new_socket,  code_g[21].code, code_g[21].msg);
+        PRT_SE(*new_socket, code_g[21].code, code_g[21].msg);
         close(fd_file);
     } else
         PRT_SE(*new_socket, code_g[14].code, code_g[14].msg);
@@ -52,5 +52,5 @@ void check_stor(char **command, int *new_socket, client_t *client)
         close(client->server.sockfd);
         client->mode = NONE;
     }  else
-        PRT_SE(*new_socket,  code_g[18].code, code_g[18].msg);
+        PRT_SE(*new_socket, code_g[18].code, code_g[18].msg);
 }

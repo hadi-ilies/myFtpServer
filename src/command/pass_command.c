@@ -22,7 +22,7 @@ void check_password(char **command, int *new_socket, client_t *client)
         PRT_SE(*new_socket, code_g[13].code, code_g[13].msg);
         return;
     } if (command[1] == NULL)
-          command[1] = "";
+        command[1] = "";
     char *pass = command[1];
 
     for (size_t i = 0; clients_g[i].user != NULL; i++) {
