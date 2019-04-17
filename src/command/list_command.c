@@ -30,8 +30,8 @@ static void list(char **command, int *new_socket, int client_socket)
     }
     dup2(client_socket, STDOUT_FILENO);
     if (pid == 0) {
-        execl("/bin/ls", "ls", "-l", command[1] == NULL ? "." :
-        command[1], NULL);
+        execl("/bin/ls", "ls", "-l", command[1], NULL);
+        perror("execl");
         PRT_SE(*new_socket, code_g[14].code, code_g[14].msg);
     } else
         waitpid(pid, 0, WSTOPPED);

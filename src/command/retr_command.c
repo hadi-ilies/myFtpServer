@@ -25,17 +25,16 @@ static void retr(char **command, int *new_socket, int client_socket)
 {
     int fd_file = open(command[1], O_RDONLY);
     void *buf;
-    struct  stat s;
+    struct stat s;
 
     if (fd_file != -1) {
         fstat(fd_file, &s);
+        PRT_SE(*new_socket, code_g[20].code, code_g[20].msg);
         buf = mmap(NULL , s.st_size , PROT_READ , MAP_PRIVATE , fd_file, 0);
         dprintf(client_socket, "%s", (char *) buf);
-        PRT_SE(*new_socket, code_g[20].code, code_g[20].msg);
         PRT_SE(*new_socket, code_g[21].code, code_g[21].msg);
         munmap(buf , s.st_size);
-    } else
-        PRT_SE(*new_socket, code_g[19].code, code_g[19].msg);
+    }
 }
 
 void check_retr(char **command, int *new_socket, client_t *client)

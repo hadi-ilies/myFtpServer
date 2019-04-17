@@ -49,7 +49,7 @@ void create_active_socket(client_t *client)
     addr.sin_addr.s_addr = inet_addr(client->server.ip_addr);
     addr.sin_port = htons((uint16_t) client->server.port);
 	if (connect(sock, (const struct sockaddr *)&addr, sizeof(addr)) == -1)
-        printf("LOL\n");
+        printf("CONNECT ERROR\n");
     client->server.sockfd = sock;
 }
 
