@@ -29,7 +29,7 @@ static void stor(char **command, int *new_socket, int client_socket)
     if (fd_file != -1) {
         PRT_SE(*new_socket, code_g[20].code, code_g[20].msg);
         while (read(client_socket, buffer, getpagesize()) > 0)
-            PRT_SE(fd_file, "%s", buffer);
+            dprintf(fd_file, "%s", buffer);
         PRT_SE(*new_socket, code_g[21].code, code_g[21].msg);
         close(fd_file);
     } else

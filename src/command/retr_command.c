@@ -30,7 +30,7 @@ static void retr(char **command, int *new_socket, int client_socket)
     if (fd_file != -1) {
         fstat(fd_file, &s);
         buf = mmap(NULL , s.st_size , PROT_READ , MAP_PRIVATE , fd_file, 0);
-        PRT_SE(client_socket, "%s", (char *) buf);
+        dprintf(client_socket, "%s", (char *) buf);
         PRT_SE(*new_socket, code_g[20].code, code_g[20].msg);
         PRT_SE(*new_socket, code_g[21].code, code_g[21].msg);
         munmap(buf , s.st_size);
