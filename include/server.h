@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2019
-**
+** server
 ** File description:
-**
+** server
 */
 
 #pragma once
@@ -14,15 +14,15 @@
 #define NB_CLIENT 20
 
 typedef enum {
-  GUESS,
-  LOGGED
-} status_t;  
+    GUESS,
+    LOGGED
+} status_t;
 
 typedef enum {
-  NONE,
-  PASV,
-  ACTIVE
-} client_mode_t;  
+    NONE,
+    PASV,
+    ACTIVE
+} client_mode_t;
 
 typedef struct
 {
@@ -42,43 +42,41 @@ typedef struct
 } server_t;
 
 typedef struct {
-  const char *user;
-  const char *pass;
+    const char *user;
+    const char *pass;
 } user_table_t;
 
 typedef struct {
-  const char *code;
-  const char *msg;
+    const char *code;
+    const char *msg;
 } code_t;
 
 typedef struct {
-  char *home;
-  char *pwd;
-  char *old_pwd;
-  char *username;
-  int fd;
-  status_t status;
-  client_mode_t mode;
-  server_t server;
+    char *home;
+    char *pwd;
+    char *old_pwd;
+    char *username;
+    int fd;
+    status_t status;
+    client_mode_t mode;
+    server_t server;
 } client_t;
 
 typedef struct {
-  status_t status;
-  char *command;
-  void (*func) (char **command, int *new_socket, client_t *client);
-  size_t nb_args;
-  bool optional_arg;
+    status_t status;
+    char *command;
+    void (*func) (char **command, int *new_socket, client_t *client);
+    size_t nb_args;
+    bool optional_arg;
 } commands_t;
 
-static const user_table_t clients_g[] = 
-{   
-    {"Anonymous", ""}, 
+static const user_table_t clients_g[] =
+{
+    {"Anonymous", ""},
     {"Hadi", "LOLdu93"},
     {NULL, NULL}
 };
 
-//todo have to write a better help message
-//NOTE : macros > static const. 
 static const code_t code_g[] =
 {
     {"120", "Service ready in nnn minutes."},
@@ -124,10 +122,7 @@ void check_port(char **command, int *new_socket, client_t *client);
 void check_retr(char **command, int *new_socket, client_t *client);
 void check_stor(char **command, int *new_socket, client_t *client);
 
-//TODO check Error arguments
-//todo create a var in struct to save nb arg and after that have to compare
-
-static const commands_t command_g[] = 
+static const commands_t command_g[] =
 {
     {GUESS, "USER", &check_user, 1, false},
     {GUESS, "PASS", &check_password, 1, true},
