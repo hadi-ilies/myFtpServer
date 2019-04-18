@@ -36,8 +36,6 @@ static void retr(char **command, int *new_socket, int client_socket)
     void *buf;
     struct stat s;
 
-    if (has_access(*new_socket, command[1]) == false)
-        return;
     if (fd_file != -1) {
         fstat(fd_file, &s);
         PRT_SE(*new_socket, code_g[20].code, code_g[20].msg);
@@ -53,6 +51,8 @@ void check_retr(char **command, int *new_socket, client_t *client)
 {
     int fd = 0;
 
+    if (has_access(*new_socket, command[1]) == false)
+        return;
     if (client->mode == PASV) {
         fd = accept(client->server.sockfd,
                     (struct sockaddr *)&client->server.address,
