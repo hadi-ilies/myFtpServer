@@ -21,12 +21,23 @@
 #include "prototype.h"
 #include "server.h"
 
+bool has_access(int new_socket, char *command)
+{
+    if (access(command, F_OK) != 0) {
+        PRT_SE(new_socket, code_g[22].code, code_g[22].msg);
+        return false;
+    }
+    return true;
+}
+
 static void retr(char **command, int *new_socket, int client_socket)
 {
     int fd_file = open(command[1], O_RDONLY);
     void *buf;
     struct stat s;
 
+    if (has_access(*new_socket, command[1]) == false)
+        return;
     if (fd_file != -1) {
         fstat(fd_file, &s);
         PRT_SE(*new_socket, code_g[20].code, code_g[20].msg);
@@ -34,7 +45,8 @@ static void retr(char **command, int *new_socket, int client_socket)
         dprintf(client_socket, "%s", (char *) buf);
         PRT_SE(*new_socket, code_g[21].code, code_g[21].msg);
         munmap(buf , s.st_size);
-    }
+    } else
+        PRT_SE(new_socket, code_g[22].code, code_g[22].msg);
 }
 
 void check_retr(char **command, int *new_socket, client_t *client)

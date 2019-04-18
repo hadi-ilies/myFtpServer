@@ -24,4 +24,5 @@ void create_active_socket(client_t *client);
 int new_client(server_t *server);
 client_t init_client(int fd, server_t *server, char *path);
 bool is_valid(char **command, int *new_socket, client_t *client);
+bool has_access(int new_socket, char *command);
 #endif

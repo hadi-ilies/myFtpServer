@@ -33,7 +33,7 @@ static void stor(char **command, int *new_socket, int client_socket)
         PRT_SE(*new_socket, code_g[21].code, code_g[21].msg);
         close(fd_file);
     } else
-        PRT_SE(*new_socket, code_g[14].code, code_g[14].msg);
+        PRT_SE(*new_socket, code_g[22].code, code_g[22].msg);
 }
 
 void check_stor(char **command, int *new_socket, client_t *client)
@@ -42,8 +42,8 @@ void check_stor(char **command, int *new_socket, client_t *client)
 
     if (client->mode == PASV) {
         fd = accept(client->server.sockfd,
-                    (struct sockaddr *) &client->server.address,
-                    (socklen_t*) &client->server.addrlen);
+        (struct sockaddr *) &client->server.address,
+        (socklen_t*) &client->server.addrlen);
         stor(command, new_socket, fd);
         close(fd);
         client->mode = NONE;
@@ -52,6 +52,6 @@ void check_stor(char **command, int *new_socket, client_t *client)
         stor(command, new_socket, client->server.sockfd);
         close(client->server.sockfd);
         client->mode = NONE;
-    }  else
+    } else
         PRT_SE(*new_socket, code_g[18].code, code_g[18].msg);
 }
