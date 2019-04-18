@@ -37,7 +37,8 @@ static void exec_command(server_t *server, client_t *clients)
             && FD_ISSET(server->fds[i], &server->readSet)) {
             FILE *fd = fdopen(server->fds[i], "r");
 
-            fgets(server->buffer, getpagesize(), fd);
+            if (fgets(server->buffer, getpagesize(), fd) == NULL)
+                break;
             char **command = split_c(server->buffer, " \n\t\r");
 
             is_valid(command, &server->fds[i], &clients[i]) ?
