@@ -44,7 +44,7 @@ void create_active_socket(client_t *client)
 
     sock = socket(AF_INET, SOCK_STREAM, pe->p_proto);
     setsockopt(sock, SOL_SOCKET, SO_REUSEADDR,
-               (const char *)&useless, sizeof(useless));
+    (const char *)&useless, sizeof(useless));
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = inet_addr(client->server.ip_addr);
     addr.sin_port = htons((uint16_t) client->server.port);
