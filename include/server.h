@@ -31,7 +31,7 @@ typedef struct
     int fds[NB_CLIENT];
     fd_set readSet;
     fd_set writeSet;
-    int opt;//i
+    int opt;
     int set_sock_opt;
     struct sockaddr_in address;
     int addrlen;
@@ -138,7 +138,7 @@ static const commands_t command_g[] =
     {LOGGED, "NOOP", &check_noop, 0, false},
     {LOGGED, "PASV", &check_pasv, 0, false},
     {LOGGED, "PORT", &check_port, 1, true},
-    {LOGGED, "RETR", &check_retr, 1, false},
+    {LOGGED, "RETR", &check_retr, 1, true},
     {LOGGED, "STOR", &check_stor, 1, false},
     {GUESS, NULL, NULL, 0, false}
 };

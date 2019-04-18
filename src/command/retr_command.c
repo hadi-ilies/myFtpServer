@@ -46,7 +46,7 @@ static void retr(char **command, int *new_socket, int client_socket)
         PRT_SE(*new_socket, code_g[21].code, code_g[21].msg);
         munmap(buf , s.st_size);
     } else
-        PRT_SE(new_socket, code_g[22].code, code_g[22].msg);
+        PRT_SE(*new_socket, code_g[22].code, code_g[22].msg);
 }
 
 void check_retr(char **command, int *new_socket, client_t *client)
