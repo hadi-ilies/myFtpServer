@@ -39,18 +39,17 @@ void create_active_socket(client_t *client)
 {
     struct protoent *pe = getprotobyname("TCP");
     int useless = 1;
-    int sock;
     struct sockaddr_in addr;
 
-    sock = socket(AF_INET, SOCK_STREAM, pe->p_proto);
-    setsockopt(sock, SOL_SOCKET, SO_REUSEADDR,
+    client->server.sockfd = socket(AF_INET, SOCK_STREAM, pe->p_proto);
+    setsockopt(client->server.sockfd, SOL_SOCKET, SO_REUSEADDR,
     (const char *)&useless, sizeof(useless));
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = inet_addr(client->server.ip_addr);
     addr.sin_port = htons((uint16_t) client->server.port);
-    if (connect(sock, (const struct sockaddr *)&addr, sizeof(addr)) == -1)
+    if (connect(client->server.sockfd, 
+    (const struct sockaddr *)&addr, sizeof(addr)) == -1)
         printf("CONNECT ERROR\n");
-    client->server.sockfd = sock;
 }
 
 void check_port(char **command, int *new_socket, client_t *client)
