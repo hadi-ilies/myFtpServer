@@ -83,7 +83,22 @@ static const code_t code_g[] =
     {"125", "Data connection already open; transfer starting."},
     {"150", "File status okay; about to open data connection."},
     {"200", "Command okay."},
-    {"214", "commands available are : USER PASS HELP PWD CWD CDUP NOPE DELE LIST PASV PORT STOR RETR QUIT"},
+    {"214", "commands available are :\n \
+        CDUP - Moves one directory up.\n \
+        CWD <directory> - Change working directory.\n \
+        DELE <file> - Delete file.\n \
+        HELP - Displays the help.\n \
+        LIST - Lists the content of the directory.\n \
+        NOOP - No operation.\n \
+        PASS <password> - Anonymous does not have password.\n \
+        PASV - Enter Passive Mode.\n \
+        PORT <ip1.ip2.ip3.ip4,PORT1.PORT2> - Enter Active Mode on port <port>.\n \
+        PWD - Print working directory.\n \
+        QUIT - Quits the current session.\n \
+        RETR <file> - Retreive file from server.\n \
+        STOR <local_file> - Store local file to server.\n \
+        USER <username> - Login with <Anonymous>."
+    },
     {"220", "Service ready for new user."},
     {"221", "Service closing control connection."},
     {"226", "Closing data connection."},

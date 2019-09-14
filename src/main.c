@@ -13,9 +13,9 @@
 #include <dirent.h>
 #include "prototype.h"
 
-static const char *usage_g = "USAGE:\t./myftp port path\n\tport is"
-"the port number on which the server socket listens\n\t"
-"path is the path to the home directory for the Anonymous user\n";
+static const char *usage_g = "USAGE:\t./myftp <PORT> <PATH>\n\n"
+"<PORT>\tthe port number on which the server socket listens\n"
+"<PATH>\tthe path to the home directory for the Anonymous user\n";
 
 static bool isanum(const char *str)
 {

@@ -26,7 +26,7 @@ static int retrieve_port(char *command)
     int	port1 = -1;
     int	port2 = -1;
 
-    if (sscanf(command, "%ld,%ld,%ld,%ld,%d,%d",
+    if (sscanf(command, "%ld.%ld.%ld.%ld,%d.%d",
     &ip, &ip, &ip, &ip, &port1, &port2) == -1)
         return -1;
     if (port1 <= 0 || port2 < 0)
@@ -47,7 +47,7 @@ void create_active_socket(client_t *client)
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = inet_addr(client->server.ip_addr);
     addr.sin_port = htons((uint16_t) client->server.port);
-    if (connect(client->server.sockfd, 
+    if (connect(client->server.sockfd,
     (const struct sockaddr *)&addr, sizeof(addr)) == -1)
         printf("CONNECT ERROR\n");
 }
