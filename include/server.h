@@ -83,7 +83,7 @@ static const code_t code_g[] =
     {"125", "Data connection already open; transfer starting."},
     {"150", "File status okay; about to open data connection."},
     {"200", "Command okay."},
-    {"214", "commands available are : USER PASS HELP PWD CWD CDUP NOPE QUIT"},
+    {"214", "commands available are : USER PASS HELP PWD CWD CDUP NOPE DELE LIST PASV PORT STOR RETR QUIT"},
     {"220", "Service ready for new user."},
     {"221", "Service closing control connection."},
     {"226", "Closing data connection."},
